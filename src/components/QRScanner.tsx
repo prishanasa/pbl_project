@@ -99,7 +99,7 @@ export const QRCodeScanner = () => {
     } catch (error: any) {
       toast({
         title: "Error processing QR code",
-        description: error.message,
+        description: "Could not process the QR code. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -113,27 +113,13 @@ export const QRCodeScanner = () => {
     try {
       setLoading(true);
 
-      // Create a laundry order
-      const { error: orderError } = await supabase
-        .from('laundry_orders')
-        .insert({
-          user_id: user.id,
-          machine_id: machine.id,
-          machine_type: machine.type as any,
-          service_type: 'Quick Wash', // Default service
-          status: 'washing',
-          estimated_completion: new Date(Date.now() + 45 * 60 * 1000).toISOString(), // 45 minutes from now
-        });
+      // Use atomic RPC to create order and update machine status
+      const { data, error } = await supabase.rpc('start_laundry_order', {
+        p_machine_id: machine.id,
+        p_service_type: 'Quick Wash',
+      });
 
-      if (orderError) throw orderError;
-
-      // Update machine status
-      const { error: machineError } = await supabase
-        .from('machines')
-        .update({ status: 'In Use' })
-        .eq('id', machine.id);
-
-      if (machineError) throw machineError;
+      if (error) throw error;
 
       toast({
         title: "Laundry started!",
@@ -144,7 +130,7 @@ export const QRCodeScanner = () => {
     } catch (error: any) {
       toast({
         title: "Error starting laundry",
-        description: error.message,
+        description: "Could not start laundry. Please try again.",
         variant: "destructive",
       });
     } finally {

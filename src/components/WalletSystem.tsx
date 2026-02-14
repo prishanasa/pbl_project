@@ -60,10 +60,9 @@ export const WalletSystem = () => {
           setTransactions(transactionsData || []);
         }
       } catch (error: any) {
-        console.error('Error fetching wallet data:', error);
         toast({
           title: "Error loading wallet",
-          description: error.message,
+          description: "Failed to load wallet data. Please try again.",
           variant: "destructive",
         });
       } finally {

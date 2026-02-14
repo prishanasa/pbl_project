@@ -48,9 +48,7 @@ const UserDashboard = () => {
           .eq('id', user.id)
           .single();
 
-        if (profileError) {
-          console.error('Profile error:', profileError);
-        } else {
+        if (!profileError) {
           setProfile(profileData);
         }
 
@@ -80,7 +78,6 @@ const UserDashboard = () => {
           setRecentOrders(recentOrdersData || []);
         }
       } catch (error) {
-        console.error('Error fetching data:', error);
         toast({
           title: "Error loading dashboard",
           description: "Please try refreshing the page",

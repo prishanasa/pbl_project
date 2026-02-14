@@ -50,7 +50,7 @@ const Auth = () => {
           });
 
         if (profileError) {
-          console.error('Profile creation error:', profileError);
+          // Profile creation failed silently - user can still proceed
         }
 
         toast({

@@ -28,7 +28,7 @@ const LiveMachineStatus = () => {
         if (error) throw error;
         setMachines(data || []);
       } catch (error) {
-        console.error('Error fetching machines:', error);
+        // Machine fetch failed silently
       } finally {
         setLoading(false);
       }

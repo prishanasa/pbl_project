@@ -122,10 +122,9 @@ export const AdminAnalytics = () => {
           }
         });
       } catch (error: any) {
-        console.error('Error fetching analytics:', error);
         toast({
           title: "Error loading analytics",
-          description: error.message,
+          description: "Failed to load analytics data. Please try again.",
           variant: "destructive",
         });
       } finally {
