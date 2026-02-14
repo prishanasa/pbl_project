@@ -38,10 +38,9 @@ export const NotificationCenter = () => {
         if (error) throw error;
         setNotifications(data || []);
       } catch (error: any) {
-        console.error('Error fetching notifications:', error);
         toast({
           title: "Error loading notifications",
-          description: error.message,
+          description: "Failed to load notifications. Please try again.",
           variant: "destructive",
         });
       } finally {

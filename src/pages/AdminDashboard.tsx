@@ -111,10 +111,9 @@ const AdminDashboard = () => {
         }
 
       } catch (error) {
-        console.error('Error fetching admin data:', error);
         toast({
           title: "Error loading admin dashboard",
-          description: "Please try refreshing the page",
+          description: "Please try refreshing the page.",
           variant: "destructive",
         });
       } finally {

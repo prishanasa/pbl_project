@@ -40,10 +40,9 @@ export const BookingHistory = () => {
         if (error) throw error;
         setBookings(data || []);
       } catch (error: any) {
-        console.error('Error fetching bookings:', error);
         toast({
           title: "Error loading bookings",
-          description: error.message,
+          description: "Failed to load your bookings. Please try again.",
           variant: "destructive",
         });
       } finally {

@@ -345,6 +345,10 @@ export type Database = {
           unique_users: number
         }[]
       }
+      start_laundry_order: {
+        Args: { p_machine_id: string; p_service_type: string }
+        Returns: string
+      }
     }
     Enums: {
       machine_type: "washer" | "dryer"
