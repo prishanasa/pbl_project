@@ -311,6 +311,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      add_wallet_funds: {
+        Args: {
+          p_amount: number
+          p_description: string
+          p_user_id: string
+          p_wallet_id: string
+        }
+        Returns: number
+      }
       get_booking_analytics: {
         Args: never
         Returns: {

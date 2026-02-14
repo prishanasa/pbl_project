@@ -99,34 +99,23 @@ export const WalletSystem = () => {
     if (!user || !wallet) return;
 
     try {
-      // Insert transaction
-      const { error: transactionError } = await supabase
-        .from('wallet_transactions')
-        .insert({
-          user_id: user.id,
-          wallet_id: wallet.id,
-          type: 'credit',
-          amount: amount,
-          description: `Added ₹${amount} to wallet`
-        });
+      // Use atomic database function to prevent race conditions
+      const { data, error } = await supabase.rpc('add_wallet_funds', {
+        p_wallet_id: wallet.id,
+        p_user_id: user.id,
+        p_amount: amount,
+        p_description: `Added ₹${amount} to wallet`
+      });
 
-      if (transactionError) throw transactionError;
-
-      // Update wallet balance
-      const { error: walletError } = await supabase
-        .from('user_wallets')
-        .update({ balance: wallet.balance + amount })
-        .eq('id', wallet.id);
-
-      if (walletError) throw walletError;
+      if (error) throw error;
 
       toast({
         title: "Money added successfully!",
         description: `₹${amount} has been added to your wallet`,
       });
 
-      // Refresh wallet data
-      setWallet({ ...wallet, balance: wallet.balance + amount });
+      // Update local state with new balance from server
+      setWallet({ ...wallet, balance: data as number });
     } catch (error: any) {
       toast({
         title: "Error adding money",
