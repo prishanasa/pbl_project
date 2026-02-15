@@ -1,4 +1,4 @@
-
+Since,it's a dynamic website and not just a static website,I have published this site on vercel.
 
 ## Project info
 LIVE URL-https://spotless-schedule-wash-wjvh.vercel.app/
